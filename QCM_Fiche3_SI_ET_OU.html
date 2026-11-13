@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>QCM Fiche 3 : SI, ET, OU</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1d2330;--muted:#5d6678;--line:#d9dde5;--accent:#1f4e78;--accent-t:#fff;--ok:#1b7a3d;--ok-bg:#e3f4e8;--ko:#b3261e;--ko-bg:#fbe7e5;--code:#eef1f6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151b;--card:#1b2029;--text:#e8ebf1;--muted:#9aa3b5;--line:#2c3340;--accent:#6aa9e0;--accent-t:#0d1117;--ok:#6fd08c;--ok-bg:#16301f;--ko:#ff8a80;--ko-bg:#3a1c1a;--code:#252c38;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#12151b;--card:#1b2029;--text:#e8ebf1;--muted:#9aa3b5;--line:#2c3340;--accent:#6aa9e0;--accent-t:#0d1117;--ok:#6fd08c;--ok-bg:#16301f;--ko:#ff8a80;--ko-bg:#3a1c1a;--code:#252c38;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.45}
+.wrap{max-width:760px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:8px 0 4px}
+.sub{color:var(--muted);margin:0 0 14px;font-size:14px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);padding:8px 0;z-index:5;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.track{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--accent);transition:width .2s}
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:12px 0}
+.q.ok{border-color:var(--ok)}.q.ko{border-color:var(--ko)}
+.qt{font-weight:bold;margin:0 0 8px}
+pre.f{background:var(--code);padding:8px 10px;border-radius:8px;margin:0 0 10px;font-family:Consolas,Menlo,monospace;font-size:13px;overflow-x:auto;white-space:pre}
+label{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border:1px solid var(--line);border-radius:8px;margin:6px 0;cursor:pointer}
+label input{margin-top:3px}
+label.code span.t{font-family:Consolas,Menlo,monospace;font-size:13px;overflow-x:auto;white-space:pre}
+label.good{background:var(--ok-bg);border-color:var(--ok)}
+label.bad{background:var(--ko-bg);border-color:var(--ko)}
+.exp{margin-top:8px;padding:8px 10px;border-radius:8px;font-size:14px}
+.exp.ok{background:var(--ok-bg);color:var(--ok)}.exp.ko{background:var(--ko-bg);color:var(--ko)}
+.exp b{color:var(--text)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+button{font:inherit;padding:12px 18px;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-t);cursor:pointer;font-weight:bold}
+button.alt{background:transparent;color:var(--accent)}
+#res{display:none;background:var(--card);border:2px solid var(--accent);border-radius:12px;padding:16px;margin:14px 0;text-align:center}
+#res .big{font-size:34px;font-weight:bold;margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>QCM avancé : Fiche pédagogique n°3</h1>
+<p class="sub">Fonctions logiques SI, ET, OU. Une seule réponse par question. Clique sur « Valider » à la fin pour voir ta note et la correction.</p>
+<div class="bar"><span id="cnt">0/15 répondues</span><div class="track"><div class="fill" id="fill"></div></div></div>
+<div id="res"></div>
+<div id="qs"></div>
+<div class="btns"><button id="go">Valider mes réponses</button><button class="alt" id="reset">Recommencer</button></div>
+</div>
+<script>
+var Q=[
+{q:"Que renvoie cette formule si B2 = 12 et C2 = 9 ?",f:`=SI(ET(B2>=10;C2>=8);"Admis";"Refusé")`,o:["Admis","Refusé","VRAI","FAUX"],a:0,e:"12 ≥ 10 est vrai et 9 ≥ 8 est vrai : ET est vrai, donc « Admis »."},
+{q:"Que renvoie cette formule si B2 = 7 et C2 = 9 ?",f:`=SI(OU(B2>=10;C2>=8);"Admis";"Refusé")`,o:["Admis","Refusé","VRAI","Erreur"],a:0,e:"7 ≥ 10 est faux, mais 9 ≥ 8 est vrai : une seule condition vraie suffit avec OU, donc « Admis »."},
+{q:"Quelle condition correspond à cette phrase : « L’étudiant est admis s’il a une moyenne >= 10 ET une assiduité >= 8 » ?",o:["OU(B2>=10;C2>=8)","ET(B2>=10;C2>=8)","SI(B2>=10;C2>=8)","ET(B2>=10;OU(C2>=8))"],c:1,a:1,e:"Les deux conditions doivent être réunies : ET(B2>=10;C2>=8)."},
+{q:"Quelle condition correspond à cette phrase : « Le dossier est en alerte si la moyenne est < 8 OU si l’assiduité est < 5 » ?",o:["ET(B2<8;C2<5)","OU(B2<8;C2<5)","SI(B2<8;C2<5)","OU(B2>8;C2>5)"],c:1,a:1,e:"Une seule situation à risque suffit : OU(B2<8;C2<5)."},
+{q:"Que renvoie cette formule si B2 = 14, C2 = 6 et D2 = \"Oui\" ?",f:`=SI(ET(B2>=10;OU(C2>=8;D2="Oui"));"Validé";"Non validé")`,o:["Validé","Non validé","VRAI","#NOM?"],a:0,e:"14 ≥ 10 est vrai. Dans le OU : 6 ≥ 8 est faux, mais D2=\"Oui\" est vrai, donc le OU est vrai. ET(vrai;vrai) donne « Validé »."},
+{q:"Que renvoie cette formule si B2 = 9, C2 = 10 et D2 = \"Oui\" ?",f:`=SI(ET(B2>=10;OU(C2>=8;D2="Oui"));"Validé";"Non validé")`,o:["Validé","Non validé","VRAI","Erreur"],a:1,e:"9 ≥ 10 est faux : le ET est faux quoi qu’il y ait dans le OU. Résultat « Non validé »."},
+{q:"Quelle formule signifie : « L’étudiant est accepté s’il a une moyenne >= 12 ET s’il est soit assidu, soit recommandé » ?",o:[`=SI(OU(B2>=12;ET(C2="Oui";D2="Oui"));"Accepté";"Refusé")`,`=SI(ET(B2>=12;OU(C2="Oui";D2="Oui"));"Accepté";"Refusé")`,`=SI(ET(B2>=12;C2="Oui";D2="Oui");"Accepté";"Refusé")`,`=SI(OU(B2>=12;C2="Oui";D2="Oui");"Accepté";"Refusé")`],c:1,a:1,e:"La moyenne est obligatoire (ET), et le « soit assidu, soit recommandé » est un OU placé à l’intérieur."},
+{q:"Que renvoie cette formule si B2 = 15, C2 = \"Non\" et D2 = \"Oui\" ?",f:`=SI(ET(B2>=12;OU(C2="Oui";D2="Oui"));"Accepté";"Refusé")`,o:["Accepté","Refusé","VRAI","FAUX"],a:0,e:"15 ≥ 12 est vrai. OU(C2=\"Oui\" faux ; D2=\"Oui\" vrai) est vrai. ET(vrai;vrai) donne « Accepté »."},
+{q:"Quelle formule signifie : « Afficher Prime si le chiffre d’affaires est supérieur à 5000 ET si soit l’objectif est atteint, soit le client est prioritaire » ?",o:[`=SI(ET(B2>5000;OU(C2="Atteint";D2="Prioritaire"));"Prime";"Pas de prime")`,`=SI(OU(B2>5000;ET(C2="Atteint";D2="Prioritaire"));"Prime";"Pas de prime")`,`=SI(ET(B2>5000;C2="Atteint";D2="Prioritaire");"Prime";"Pas de prime")`,`=SI(OU(B2>5000;C2="Atteint";D2="Prioritaire");"Prime";"Pas de prime")`],c:1,a:0,e:"Le chiffre d’affaires > 5000 est obligatoire (ET), et « soit… soit… » est un OU à l’intérieur."},
+{q:"Quelle est la différence entre les deux formules suivantes ?",f:`=ET(B2>=10;OU(C2>=8;D2="Oui"))\n=OU(B2>=10;ET(C2>=8;D2="Oui"))`,o:["Il n’y a aucune différence","La première exige B2>=10, la deuxième non nécessairement","La deuxième exige toujours les trois conditions","La première fonctionne uniquement avec du texte"],a:1,e:"Dans la 1re, B2>=10 est obligatoire. Dans la 2e, B2>=10 suffit à lui seul (OU), sans que les autres soient vraies."},
+{q:"Si B2 = 8, C2 = 9 et D2 = \"Oui\", laquelle de ces formules renvoie VRAI ?",f:`A. =ET(B2>=10;OU(C2>=8;D2="Oui"))\nB. =OU(B2>=10;ET(C2>=8;D2="Oui"))`,o:["A seulement","B seulement","Les deux","Aucune"],a:1,e:"A : 8 ≥ 10 est faux, donc ET est faux. B : ET(C2>=8;D2=\"Oui\") est vrai (9 ≥ 8 et \"Oui\"), donc OU est vrai. Seule B renvoie VRAI."},
+{q:"Que signifie cette formule ?",f:`=SI(OU(ET(B2>=10;C2>=8);D2="Exception");"Accepté";"Refusé")`,o:["Accepté uniquement si toutes les conditions sont vraies",`Accepté si B2>=10 ET C2>=8, OU si D2="Exception"`,`Accepté si B2>=10 OU C2>=8 ET D2="Exception"`,"Refusé dans tous les cas"],a:1,e:"Le OU contient deux blocs : le ET(B2>=10;C2>=8) ou bien D2=\"Exception\". L’un des deux suffit."},
+{q:"Que renvoie cette formule si B2 = 9, C2 = 6 et D2 = \"Exception\" ?",f:`=SI(OU(ET(B2>=10;C2>=8);D2="Exception");"Accepté";"Refusé")`,o:["Accepté","Refusé","VRAI","Erreur"],a:0,e:"Le ET est faux (9 < 10), mais D2=\"Exception\" est vrai : le OU est vrai, donc « Accepté »."},
+{q:"Quelle formule correspond à : « Afficher Excellent si la note est >= 16 ET l’assiduité >= 8, Admis si la note est >= 10, sinon Refusé » ?",o:[`=SI(ET(B2>=16;C2>=8);"Excellent";SI(B2>=10;"Admis";"Refusé"))`,`=SI(OU(B2>=16;C2>=8);"Excellent";SI(B2>=10;"Admis";"Refusé"))`,`=SI(B2>=10;"Admis";SI(ET(B2>=16;C2>=8);"Excellent";"Refusé"))`,`=SI(ET(B2>=10;C2>=8);"Excellent";"Refusé")`],c:1,a:0,e:"Le cas le plus exigeant (Excellent) se teste en premier avec ET, puis Admis, sinon Refusé. L’option C commence par ≥ 10 : un 17 afficherait « Admis »."},
+{q:"Quel est le principal piège dans cette formule ?",f:`=SI(ET(B2>=10;OU(C2>=8;D2="Oui"));"Validé";"Non validé")`,o:["Excel ne permet pas de mettre OU dans ET","Il faut bien comprendre quelles conditions appartiennent au ET et lesquelles appartiennent au OU","OU ne fonctionne qu’avec des nombres","ET ne peut contenir que deux conditions"],a:1,e:"On peut imbriquer OU dans ET sans problème : le piège est de bien placer les parenthèses selon la logique voulue."}
+];
+var L="ABCD";
+var box=document.getElementById("qs");
+Q.forEach(function(x,i){
+  var d=document.createElement("div");d.className="q";d.id="q"+i;
+  var p=document.createElement("p");p.className="qt";p.textContent=(i+1)+". "+x.q;d.appendChild(p);
+  if(x.f){var pr=document.createElement("pre");pr.className="f";pr.textContent=x.f;d.appendChild(pr);}
+  x.o.forEach(function(t,j){
+    var lb=document.createElement("label");if(x.c)lb.className="code";
+    var r=document.createElement("input");r.type="radio";r.name="r"+i;r.value=j;r.addEventListener("change",prog);
+    var s=document.createElement("span");s.className="t";s.textContent=L[j]+". "+t;
+    lb.appendChild(r);lb.appendChild(s);d.appendChild(lb);
+  });
+  box.appendChild(d);
+});
+function got(i){var r=document.querySelector('input[name="r'+i+'"]:checked');return r?+r.value:-1;}
+function prog(){var n=0;Q.forEach(function(_,i){if(got(i)>=0)n++;});
+  document.getElementById("cnt").textContent=n+"/15 répondues";
+  document.getElementById("fill").style.width=(n/15*100)+"%";}
+document.getElementById("go").addEventListener("click",function(){
+  var sc=0,miss=0;
+  Q.forEach(function(x,i){
+    var d=document.getElementById("q"+i),g=got(i),ok=g===x.a;
+    if(g<0)miss++;
+    if(ok)sc++;
+    d.className="q "+(ok?"ok":"ko");
+    var old=d.querySelector(".exp");if(old)old.remove();
+    d.querySelectorAll("label").forEach(function(lb,j){
+      lb.classList.remove("good","bad");
+      var inp=lb.querySelector("input");inp.disabled=true;
+      if(j===x.a)lb.classList.add("good");
+      else if(j===g)lb.classList.add("bad");
+    });
+    var e=document.createElement("div");e.className="exp "+(ok?"ok":"ko");
+    var head=ok?"Correct. ":(g<0?"Sans réponse. Bonne réponse : "+L[x.a]+". ":"Faux. Bonne réponse : "+L[x.a]+". ");
+    var b=document.createElement("b");b.textContent=head;e.appendChild(b);
+    e.appendChild(document.createTextNode(x.e));
+    d.appendChild(e);
+  });
+  var r=document.getElementById("res");r.style.display="block";
+  var pct=Math.round(sc/15*100);
+  var msg=sc>=13?"Excellent, tu maîtrises le sujet.":sc>=10?"Bien, relis les questions ratées.":sc>=7?"Moyen, revois le ET imbriqué dans le OU.":"À retravailler : reprends la logique ET / OU pas à pas.";
+  r.innerHTML="";
+  var a=document.createElement("div");a.textContent="Ton résultat final";
+  var bg=document.createElement("div");bg.className="big";bg.textContent=sc+" / 15 ("+pct+" %)";
+  var m=document.createElement("div");m.textContent=msg+(miss?" ("+miss+" sans réponse)":"");
+  r.appendChild(a);r.appendChild(bg);r.appendChild(m);
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+document.getElementById("reset").addEventListener("click",function(){
+  Q.forEach(function(x,i){
+    var d=document.getElementById("q"+i);d.className="q";
+    var e=d.querySelector(".exp");if(e)e.remove();
+    d.querySelectorAll("label").forEach(function(lb){lb.classList.remove("good","bad");var inp=lb.querySelector("input");inp.checked=false;inp.disabled=false;});
+  });
+  document.getElementById("res").style.display="none";prog();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+</script>
+</body>
+</html>
